@@ -1,6 +1,4 @@
 <?php
-$logFile = 'log.txt';
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo '<pre>';
     var_dump($_FILES);
@@ -25,11 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (file_exists($filePath)) {
                 echo 'Файл вже існує';
                 $newFileName = md5(uniqid()) . '.' . $fileExt;
-                $filePath = $uploadDir . $newFileName;
-            }
-
-            if (move_uploaded_file($fileTmp, $filePath)) {
-                echo "<br>Файл успішно завантажено: $filePath";
+                if (move_uploaded_file($fileTmp, $uploadDir . $newFileName)) {
+                    echo "<br>File with new name $newFileName was added";
+                }
             } else {
                 throw new Exception("Помилка при збереженні файлу.");
             }
@@ -46,15 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "<br>Link: <a href='$filePath'>$filePath</a>";
 
     echo '<br><br><br>';
-
-    $textForLogFile = $_POST['text'] != '' ? $_POST['text'] : null;
-    if (isset($textForLogFile)) {
-        file_put_contents($logFile, $textForLogFile, FILE_APPEND);
-    }
-    echo '<br><br><br>';
-
-    echo 'Logs: <br>';
-    echo '<pre>' . file_get_contents($logFile) . '</pre>';
 }
 ?>
 
@@ -72,9 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form method="POST" enctype="multipart/form-data">
         <label for="file">File
             <input type="file" name="file" id="file">
-        </label>
-        <label for="text">File
-            <input type="text" name="text" id="text">
         </label>
         <input type="submit">
     </form>
