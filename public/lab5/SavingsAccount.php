@@ -3,7 +3,7 @@ require_once 'BankAccount.php';
 
 class SavingsAccount extends BankAccount
 {
-    public static $interestRate = 3.5 / 100;
+    public static float $interestRate = 3.5 / 100;
 
     public function applyInterest(): void
     {

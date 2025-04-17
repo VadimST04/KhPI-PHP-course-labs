@@ -7,10 +7,10 @@ class BankAccount implements AccountInterface
 {
     public const MIN_BALANCE = 0;
 
-    protected $balance;
-    protected $currency;
+    protected float $balance;
+    protected string $currency;
 
-    public function __construct($balance = self::MIN_BALANCE, $currency = 'US')
+    public function __construct(float $balance = self::MIN_BALANCE, string $currency = 'US')
     {
         $this->balance = $balance;
         $this->currency = $currency;
@@ -21,7 +21,7 @@ class BankAccount implements AccountInterface
         return $this->balance;
     }
 
-    public function deposit($amount): void
+    public function deposit(float $amount): void
     {
         if ($amount < 0) {
             throw new NegativeValueException('Amount can NOT be a negative value!');
@@ -30,7 +30,7 @@ class BankAccount implements AccountInterface
         $this->balance += $amount;
     }
 
-    function withdraw($amount): void
+    function withdraw(float $amount): void
     {
         if ($amount < 0) {
             throw new NegativeValueException('Amount can NOT be a negative value!');
@@ -48,7 +48,7 @@ class BankAccount implements AccountInterface
         return $this->currency;
     }
 
-    public function setCurrency($currency): void
+    public function setCurrency(string $currency): void
     {
         $this->currency = $currency;
     }
